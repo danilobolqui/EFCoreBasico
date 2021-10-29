@@ -1,0 +1,19 @@
+dotnet new sln -n Curso01 -> Nova solução
+dotnet new console -n CursoEFCore -> Cria projeto console
+dotnet sln CursoEntityCoreIntro.sln add CursoEFCore\CursoEFCore.csproj -> Vincula projeto à solução
+dotnet add CursoEFCore\CursoEFCore.csproj package Microsoft.EntityFrameworkCore.SqlServer
+dotnet tool install --global dotnet-ef -> Instala ferramentas do EF de forma global (Rodar no powershell command line)
+NECESSÁRIO PARA REALIZAR O MIGRATION:
+dotnet add .\CursoEFCore\CursoEFCore.csproj package Microsoft.EntityFrameworkCore.Design
+dotnet add .\CursoEFCore\CursoEFCore.csproj package Microsoft.EntityFrameworkCore.Tools
+get-help entityframework -> Help do EF (Rodar no package manager console do VS)
+dotnet ef migrations add PrimeiraMigracao -p .\CursoEFCore\CursoEFCore.csproj -o Migrations -c ApplicationContext -> Cria migração, -p=Projet, -o=NomePasta, -c=Contexto
+dotnet ef migrations script -p .\CursoEFCore\CursoEFCore.csproj -o .\CursoEFCore\PrimeiraMigracao.sql -> Cria sql de migração -p=Project, -o=Caminho
+dotnet ef database update -p .\CursoEFCore\CursoEFCore.csproj -v -> Envia alterações para banco -v=Verbose(mostra o que está fazendo no prompt)
+dotnet ef migrations script -p .\CursoEFCore\CursoEFCore.csproj -o .\CursoEFCore\Idempotente.sql -i -> Gera scripts -i=Idempotente (com validações para não criar mais de uma vez o mesmo script ao executar mais de uma vez)
+dotnet ef migrations add AdicionarEmail -p .\CursoEFCore\CursoEFCore.csproj -> Adicionei e-mail e fiz migração
+dotnet ef database update -p .\CursoEFCore\CursoEFCore.csproj -> Aplica migração no BD
+dotnet ef database update PrimeiraMigracao -p .\CursoEFCore\CursoEFCore.csproj -v -> Reverte banco para migração informada
+dotnet ef migrations remove -p .\CursoEFCore\CursoEFCore.csproj -> Remove última migração do projeto, porque mesmo que ela seja revertida no banco, ainda fica na aplicação
+dotnet run -> roda projeto
+dotnet add package Microsoft.Extensions.Logging.Console -> Instala pacote de logs no console
